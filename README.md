@@ -1,9 +1,9 @@
 # CloudEOS for Kubernetes
 
 ## Files
-cloudeos.yaml YAML file for deploying the CloudEOS Daemonset
-RELEASE-NOTES.md - RElease notes
-leaf-switch.confg - config example for BGP Peer switch
+* [cloudeos.yaml](cloudeos.yaml) YAML file for deploying the CloudEOS Daemonset
+* [RELEASE-NOTES.md](RELEASE-NOTES.md) - Release notes for this version
+* [leaf-switch.config](leaf-switch-config) - config example for BGP Peer switch
 
 ## Design Goals
 There are a few design goals with CloudEOSr:
@@ -91,4 +91,4 @@ Entry for the volumes section:
 ## Deployment Guide
 For a more in-depth deployment guide see : [DEPLOY.md](DEPLOY.md)
 ## Example Configuration
-For an example configuration see : [EXAMPLE.md](EXAMPLE.md)<Paste>
+For an example configuration see : [EXAMPLE.md](EXAMPLE.md)

@@ -24,25 +24,24 @@ data:
   # Add any Arista config fragment here without any terminating "end"
   startupconfig-data: |-
       ! This is inserted from raw data in yamlfile
-      ip routing ipv6 interfaces
-      service routing protocols model multi-agent
-      interface defaults
-      mtu 9000
+      ntp server 172.22.22.40
+      daemon TerminAttr exec /usr/bin/TerminAttr -ingestgrpcurl=10.90.224.175:9910 -cvcompression=gzip -ingestauth=key, -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -ingestvrf=default -taillogs
+      no shutdown
       !
 ---
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: ceosr
+  name: cloudeos
   namespace: kube-system
 spec:
   selector:
     matchLabels:
-      app: ceosr
+      app: cloudeos
   template:
     metadata:
       labels:
-        app: ceosr
+        app: cloudeos
     spec:
       hostNetwork: true
       nodeSelector:
