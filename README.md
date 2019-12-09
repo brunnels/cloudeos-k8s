@@ -1,18 +1,18 @@
 # CloudEOS for Kubernetes
 
 ## Files
-* [cloudeos.yaml](cloudeos.yaml) YAML file for deploying the CloudEOS Daemonset
+* [cloudeos.yaml](cloudeos.yaml) - YAML file for deploying the CloudEOS Daemonset
 * [RELEASE-NOTES.md](RELEASE-NOTES.md) - Release notes for this version
 * [leaf-switch.config](leaf-switch-config) - config example for BGP Peer switch
 
 ## Design Goals
-There are a few design goals with CloudEOSr:
+There are a few design goals with CloudEOS:
 * Provide a Kubernetes native deployment model
-* Allow for easy deployment and redeployment of cluster nodes
+* Allow for easy deployment of cluster nodes
 * Provide an operationally consistent networking model for administrators
 * Provide the benefits of EOS from a management, observability, feature, and supportability in a Kubernetes networking environment.
 
-CloudEOSr achieves these goals by the following:
+CloudEOS achieves these goals by the following:
 
 * Using a daemonset to deploy CloudEOS containers on each node in the cluster
 * Providing configuration options directly in the deployment YAML file
@@ -40,8 +40,8 @@ Environment Variables will be used if Annotations are not present
 
 |Parameter | Description | Example |
 |----------|-------------|---------|
-|BGP_AS    | Local or remote BGP AS number.|| 
-|INTERFACE_MTU| Integer value used to configure app container interface MTUs||
+|BGP_AS    | Local or remote BGP AS number.| - name: "BGP_AS" value: "65130"| 
+|INTERFACE_MTU| Integer value used to configure app container interface MTUs|-name: "INTERFACE_MTU" value: 9000|
 
 ## ConfigMap support for clusterwide configuration
 
@@ -88,7 +88,8 @@ Entry for the volumes section:
         name: cloudeos-configmap
 
 
-## Deployment Guide
-For a more in-depth deployment guide see : [DEPLOY.md](DEPLOY.md)
+## Deployment Guides
+[Deployment with Calico](CALIDO.md)
+
 ## Example Configuration
-For an example configuration see : [EXAMPLE.md](EXAMPLE.md)
+[Example Config](EXAMPLE.md)
