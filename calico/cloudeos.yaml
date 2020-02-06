@@ -1,0 +1,127 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: cloudeos-rbac
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: kube-system
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cloudeos-configmap
+  namespace: kube-system
+data:
+  # Add any Arista config fragment here without any terminating "end"
+  startupconfig-data: |-
+      ! This is inserted from raw data in yamlfile
+      agent lldp shutdown
+      no lldp run
+      service routing protocols model multi-agent
+      ip routing ipv6 interfaces
+      interface defaults
+      mtu 9000
+      !
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: cloudeos
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: cloudeos
+  template:
+    metadata:
+      labels:
+        app: cloudeos
+    spec:
+      hostNetwork: true
+      nodeSelector:
+         beta.kubernetes.io/os: linux
+      initContainers:
+      - image: aristanetworks/cloudeos-init:4.23.0.1FX
+        name: cloudeos-init
+        command: ["/ceosr-init"]
+        env:
+          - name: NODE_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
+          # "DISABLE_EGRESS_NAT" - true to disable egress NAT from POD network.
+          - name: "DISABLE_EGRESS_NAT"
+            value: "true"
+          # "DATASTORE_TYPE" - Do not change
+          - name: "DATASTORE_TYPE"
+            value: "kubernetes"
+
+        volumeMounts:
+
+        - name: startupconfig-data
+          mountPath: /config-data/
+          readOnly: false
+        - name: k8shostcnipath
+          mountPath: /opt_cni_bin
+          readOnly: false
+        - name: k8shostpluginpath
+          mountPath: /etc_cni_net.d
+          readOnly: false
+        - name: cloudeos-mnt-dir
+          mountPath: /mnt/flash
+          readOnly: false
+
+      containers:
+      - image: aristanetworks/cloudeos:4.23.0.1FX
+        name: cloudeos
+        command: ["/sbin/init"]
+        args: ["systemd.setenv=EOS_PLATFORM=veos", "systemd.setenv=container=docker"]
+        stdin: true
+        tty: true
+        env:
+        - name: "EOS_PLATFORM"
+          value: "veos"
+        - name: "container"
+          value: "docker"
+
+        securityContext:
+          privileged: true
+
+        volumeMounts:
+        - name: cloudeos-mnt-dir
+          mountPath: /mnt/flash
+          readOnly: false
+        - name: cloudeos-hotplug-dir
+          mountPath: /cloudeos
+          readOnly: false
+
+
+      volumes:
+      - name: startupconfig-data
+        configMap:
+          defaultMode: 0777
+          name: cloudeos-configmap
+      - name: k8shostcnipath
+        hostPath:
+          path: /opt/cni/bin
+          type: Directory
+      - name: k8shostpluginpath
+        hostPath:
+          path: /etc/cni/net.d
+          type: Directory
+      - name: cloudeos-mnt-dir
+        hostPath:
+          path: /cloudeos/mnt/
+          type: DirectoryOrCreate
+      - name: cloudeos-hotplug-dir
+        hostPath:
+          path: /cloudeos/hotplug/
+          type: DirectoryOrCreate
+

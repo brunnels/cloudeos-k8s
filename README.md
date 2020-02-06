@@ -42,6 +42,8 @@ Environment Variables will be used if Annotations are not present
 |----------|-------------|---------|
 |BGP_AS    | Local or remote BGP AS number.| - name: "BGP_AS" value: "65130"| 
 |INTERFACE_MTU| Integer value used to configure app container interface MTUs|-name: "INTERFACE_MTU" value: 9000|
+|DISABLE_EGRESS_NAT|Set to “true” to disable egress NAT for traffic originating from POD network to outside the cluster.  Set to “false” to enable egress NAT from the POD network. Default is false. |-name: "DISABLE_EGRESS_NAT" value: True|
+|startupconfig-data|Users can append any EOS specific configuration fragment|-name: "startupconfig-data" value: "ntp server 1.1.1.1"|
 
 ## ConfigMap support for clusterwide configuration
 
@@ -89,7 +91,7 @@ Entry for the volumes section:
 
 
 ## Deployment Guides
-[Deployment with Calico](CALIDO.md)
+[Deployment with Calico](calico)
 
 ## Example Configuration
 [Example Config](EXAMPLE.md)
