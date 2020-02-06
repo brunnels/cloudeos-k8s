@@ -5,9 +5,7 @@ metadata:
   name: cloudeos-rbac
 subjects:
   - kind: ServiceAccount
-    # Reference to upper's `metadata.name`
     name: default
-    # Reference to upper's `metadata.namespace`
     namespace: kube-system
 roleRef:
   kind: ClusterRole
@@ -47,7 +45,7 @@ spec:
       nodeSelector:
          beta.kubernetes.io/os: linux
       initContainers:
-      - image: aristanetworks/cloudeos-init:0.9
+      - image: aristanetworks/cloudeos-init:4.23.0.1FX
         name: cloudeos-init
         command: ["/ceosr-init"]
         env:
@@ -74,7 +72,7 @@ spec:
 
       containers:
       # Get the local prepopulated image
-      - image: aristanetworks/cloudeos:4.23.0FX
+      - image: aristanetworks/cloudeos:4.23.0.1FX
         name: cloudeos
         command: ["/sbin/init"]
         args: ["systemd.setenv=EOS_PLATFORM=veos", "systemd.setenv=container=docker"]

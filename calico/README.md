@@ -1,4 +1,4 @@
-# cEOSR/Kubernetes Release 1.1 Notes
+# cEOSR/Kubernetes for Calico Release 4.23.0.1FX Notes
 
 # Versions Supported
 ## System Requirements

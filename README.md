@@ -1,7 +1,7 @@
 # CloudEOS for Kubernetes
 
-## Files
-* [cloudeos.yaml](cloudeos.yaml) - YAML file for deploying the CloudEOS Daemonset
+## Files/Directories
+* [calico](calico) - Configuration files for deploying in a Calico environment
 * [RELEASE-NOTES.md](RELEASE-NOTES.md) - Release notes for this version
 * [leaf-switch.config](leaf-switch-config) - config example for BGP Peer switch
 
