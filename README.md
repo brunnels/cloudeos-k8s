@@ -1,6 +1,7 @@
 # CloudEOS for Kubernetes
 
 ## Files/Directories
+* [cilium](cilum) - Configuration files for deploying in a Cilium environment
 * [calico](calico) - Configuration files for deploying in a Calico environment
 * [RELEASE-NOTES.md](RELEASE-NOTES.md) - Release notes for this version
 * [leaf-switch.config](leaf-switch-config) - config example for BGP Peer switch
@@ -44,7 +45,7 @@ Environment Variables will be used if Annotations are not present for BGP Settin
 |INTERFACE_MTU| Integer value used to configure app container interface MTUs|-name: "INTERFACE_MTU" </br> value: 9000|
 |DISABLE_EGRESS_NAT|Set to “true” to disable egress NAT for traffic originating from POD network to outside the cluster.  Set to “false” to enable egress NAT from the POD network. Default is false. |-name: "DISABLE_EGRESS_NAT" </br> value: True|
 |startupconfig-data|Users can append any EOS specific configuration fragment|-name: "startupconfig-data" </br> value: "ntp server 1.1.1.1"|
-|CNI_PROVIDER| CNI Policy provider | - name: "CNI_PROVIDER" <\br> value: "cilium"|
+|CNI_PROVIDER| CNI Policy provider | - name: "CNI_PROVIDER" </br> value: "cilium"|
 ## ConfigMap support for clusterwide configuration
 
 (optional) If you need to apply a chunk of static config to every pod you can also create a configmap in Kubernetes that will store and configure all CloudEOS pods with generic configuration.  NOTE: These commands must be fully expanded (i.e. `interface Ethernet 1`, not `int eth 1`), and no syntax checking will occur.  If there are syntax errors with the commands it may prevent the pod from starting.  In this example I'm adding a few lines of static config for SSH to be remapped to port 8022 and adding an NTP server.  This config will be placed on every CloudEOS pod.
@@ -91,6 +92,7 @@ Entry for the volumes section:
 
 
 ## Deployment Guides
+[Deployment with Cilium](cilium)
 [Deployment with Calico](calico)
 
 ## Example Configuration
