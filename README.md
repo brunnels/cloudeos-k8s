@@ -92,8 +92,8 @@ Entry for the volumes section:
 
 
 ## Deployment Guides
-[Deployment with Cilium](cilium)
-[Deployment with Calico](calico)
+* [Deployment with Cilium](cilium)
+* [Deployment with Calico](calico)
 
 ## Example Configuration
 [Example Config](EXAMPLE.md)
