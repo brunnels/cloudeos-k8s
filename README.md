@@ -1,7 +1,7 @@
 # CloudEOS for Kubernetes
 
 ## Files/Directories
-* [cilium](cilum) - Configuration files for deploying in a Cilium environment
+* [cilium](https://github.com/aristanetworks/cloudeos-k8s/tree/master/cilium) - Configuration files for deploying in a Cilium environment
 * [calico](calico) - Configuration files for deploying in a Calico environment
 * [RELEASE-NOTES.md](RELEASE-NOTES.md) - Release notes for this version
 * [leaf-switch.config](leaf-switch-config) - config example for BGP Peer switch
