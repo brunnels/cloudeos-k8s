@@ -1,4 +1,4 @@
-# cEOSR/Kubernetes for Calico Release 4.23.0.1FX Notes
+# cEOSR/Kubernetes for Cilium
 
 # Versions Supported
 ## Kubernetes Version
